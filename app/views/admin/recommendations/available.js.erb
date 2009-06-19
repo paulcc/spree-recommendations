@@ -1,0 +1,34 @@
+<script type="text/javascript">
+  function displayRow(){
+    var row = document.getElementById("captionRow");
+    if (row.style.display == '') row.style.display = 'none';
+    else row.style.display = '';
+  }
+</script>
+<h4><%= t('available_recommendations') %></h4>
+<table class="index">
+	<thead>
+		<tr>
+			<th><%= t("name") %></th>
+			<th><%= t("action") %></th>
+		</tr>
+	</thead>
+	<tbody>
+    <% @available_recommendations.each do |recommendation| %>
+      <tr id="<%= dom_id(recommendation) %>">
+        <td><%= recommendation.name %></td>
+		    <td class="actions">
+          <%= image_tag "spinner.gif", :style => "display:none", :id => "#{dom_id(recommendation, :spinner)}" %>		  		
+		      <%= link_to_remote icon('add') + ' ' + t('select'), 
+		                         {:url => select_admin_product_recommendation_path(@product, recommendation),
+		                         :loading => "Element.show(#{dom_id(recommendation, :spinner)})",
+		                         :update => 'selected-recommendations',
+		                         :complete => "$('#{dom_id(recommendation)}').remove(); Element.hide(#{dom_id(recommendation, :spinner)});"}, :class => 'iconlink' %>  
+		    </td>        
+      </tr>
+    <% end %>
+    <% if @available_recommendations.empty? %>
+     <tr><td colspan="3"><%= t('no_match_found') %>.</td></tr>
+    <% end %>
+  </tbody>
+</table>
