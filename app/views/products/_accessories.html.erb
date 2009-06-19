@@ -1,0 +1,60 @@
+<% unless product.accessories.empty? %>
+
+<% content_for :head do %>
+<script type="text/javascript">
+  function toggle_upsell_by_checkbox(theBox,theInput) {
+    if (theBox.checked) {
+       if(theInput.value <= 1) { theInput.value = 1; }
+    } else {
+       theInput.value = 0; 
+    }
+  }
+</script>
+
+<style type="text/css">
+li.accessory {
+  width: 100%; padding-top: 10px; padding-bottom: 10px; padding-left: 10px; float: left; list-style-type: none; 
+}
+li.accessory.topline {
+  border-top: 1px solid #eeeeee;
+}
+li.accessory img {
+  float: left;
+}
+li.accessory div {
+  float: left; margin-top: 15px;
+}
+li.accessory label {
+  width: 100px;
+}
+
+</style>
+
+<% end %>
+
+<ul> 
+  <% border_line = "" %>
+  <% product.accessories.each do |acc| %>
+  <li class="accessory <%=border_line%>">
+      <%= link_to small_image(acc), acc %>
+      <div style="width: 500px;">
+        <%= link_to acc.name, acc %>
+        <br/>
+        <span class="component_price"> 
+          Sale price: <%= product_price(acc, :show_vat_text => false) if acc.master_price %>
+        </span>
+      </div> 
+
+      <div style="width: 270px;">
+        <% unless acc.has_stock? || Spree::Config[:allow_backorders] %>
+          <%= content_tag('strong', "Temporarily " + t('out_of_stock') + " - please contact us for future availability") %> 
+        <% else %>
+          <%= render :partial => 'form_accessory', :locals => {:product => acc} %>
+        <% end %>
+      </div>
+      <% border_line = "topline" %>
+  </li>
+  <% end %>
+</ul>
+
+<% end %>

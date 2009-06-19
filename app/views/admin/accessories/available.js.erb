@@ -1,0 +1,34 @@
+<script type="text/javascript">
+  function displayRow(){
+    var row = document.getElementById("captionRow");
+    if (row.style.display == '') row.style.display = 'none';
+    else row.style.display = '';
+  }
+</script>
+<h4><%= t('available_accessories') %></h4>
+<table class="index">
+	<thead>
+		<tr>
+			<th><%= t("name") %></th>
+			<th><%= t("action") %></th>
+		</tr>
+	</thead>
+	<tbody>
+    <% @available_accessories.each do |accessory| %>
+      <tr id="<%= dom_id(accessory) %>">
+        <td><%= accessory.name %></td>
+		    <td class="actions">
+          <%= image_tag "spinner.gif", :style => "display:none", :id => "#{dom_id(accessory, :spinner)}" %>		  		
+		      <%= link_to_remote icon('add') + ' ' + t('select'), 
+		                         {:url => select_admin_product_accessory_path(@product, accessory),
+		                         :loading => "Element.show(#{dom_id(accessory, :spinner)})",
+		                         :update => 'selected-accessories',
+		                         :complete => "$('#{dom_id(accessory)}').remove(); Element.hide(#{dom_id(accessory, :spinner)});"}, :class => 'iconlink' %>  
+		    </td>        
+      </tr>
+    <% end %>
+    <% if @available_accessories.empty? %>
+     <tr><td colspan="3"><%= t('no_match_found') %>.</td></tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,25 @@
+<%= render :partial => 'admin/shared/product_sub_menu' %>
+
+<%= render :partial => 'admin/shared/product_tabs', :locals => {:current => t("accessories") } %>
+<div id="selected-accessories">
+  <%= render :partial => "accessories_table", :locals => {:accessories => @accessories} %>
+</div>
+
+
+<% form_tag('#') do %>
+  <label><%= t('search') %>:</label>
+  <input id="searchtext" size="25">
+<% end %>
+
+<div id="searching" style="display:none">
+  <%= t('searching') %> &nbsp; <%= image_tag "spinner.gif" %>  
+</div>
+<%= observe_field(:searchtext,
+                  :frequency => 0.75,
+                  :update => :search_hits,
+                  :loading => "Element.show('searching')",
+                  :complete => "Element.hide('searching')",
+                  :url => available_admin_product_accessories_url(@product),
+                  :with => "'q=' + value") %>  
+<br/>                 
+<div id="search_hits"></div>

@@ -1,0 +1,27 @@
+<table class="index">
+  <thead>
+  	<tr>
+  		<th><%= t("product") %></th>
+  		<th></th>
+  	</tr>
+  </thead>
+  <tbody>
+    <% accessories.each do |accessory| %>
+      <tr id="<%= dom_id(accessory, :sel)%>">
+        <td><%= accessory.name %></td>
+  	    <td class="actions">
+          <%= image_tag "spinner.gif", :style => "display:none", :id => "#{dom_id(accessory, :rem_spinner)}" %>		  
+		      <%= link_to_remote  icon('delete') + ' ' + t('remove'), 
+		                         {:url => remove_admin_product_accessory_url(@product, accessory),
+		                         :loading => "Element.show(#{dom_id(accessory, :rem_spinner)})",
+		                         :update => 'selected-accessories',
+		                         :complete => "$('#{dom_id(accessory, :sel)}').remove(); Element.hide(#{dom_id(accessory, :rem_spinner)});"}, :class => 'iconlink' %>
+                       
+  	    </td>        
+      </tr>
+    <% end %>
+    <% if accessories.empty? %>
+     <tr><td colspan="3"><%= t('none') %>.</td></tr>
+    <% end %>
+  </tbody>
+</table>
