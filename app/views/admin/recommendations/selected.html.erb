@@ -17,8 +17,8 @@
 <%= observe_field(:searchtext,
                   :frequency => 0.75,
                   :update => :search_hits,
-                  :loading => "Element.show('searching')",
-                  :complete => "Element.hide('searching')",
+                  :loading => "$('#searching').show();",
+                  :complete => "$('#searching').hide();",
                   :url => available_admin_product_recommendations_url(@product),
                   :with => "'q=' + value") %>  
 <br/>                 

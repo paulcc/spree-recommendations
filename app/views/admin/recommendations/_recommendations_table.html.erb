@@ -13,9 +13,9 @@
           <%= image_tag "spinner.gif", :style => "display:none", :id => "#{dom_id(recommendation, :rem_spinner)}" %>		  
 		      <%= link_to_remote  icon('delete') + ' ' + t('remove'), 
 		                         {:url => remove_admin_product_recommendation_url(@product, recommendation),
-		                         :loading => "Element.show(#{dom_id(recommendation, :rem_spinner)})",
+		                         :loading => "$(#{dom_id(recommendation, :rem_spinner)}).show();",
 		                         :update => 'selected-recommendations',
-		                         :complete => "$('#{dom_id(recommendation, :sel)}').remove(); Element.hide(#{dom_id(recommendation, :rem_spinner)});"}, :class => 'iconlink' %>
+		                         :complete => "$('#{dom_id(recommendation, :sel)}').remove(); $(#{dom_id(recommendation, :rem_spinner)}).hide();"}, :class => 'iconlink' %>
                        
   	    </td>        
       </tr>

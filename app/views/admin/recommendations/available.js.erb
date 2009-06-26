@@ -21,9 +21,9 @@
           <%= image_tag "spinner.gif", :style => "display:none", :id => "#{dom_id(recommendation, :spinner)}" %>		  		
 		      <%= link_to_remote icon('add') + ' ' + t('select'), 
 		                         {:url => select_admin_product_recommendation_path(@product, recommendation),
-		                         :loading => "Element.show(#{dom_id(recommendation, :spinner)})",
+		                         :loading => "$(#{dom_id(recommendation, :spinner)}).show();",
 		                         :update => 'selected-recommendations',
-		                         :complete => "$('#{dom_id(recommendation)}').remove(); Element.hide(#{dom_id(recommendation, :spinner)});"}, :class => 'iconlink' %>  
+		                         :complete => "$('#{dom_id(recommendation)}').remove(); $(#{dom_id(recommendation, :spinner)}).hide();"}, :class => 'iconlink' %>  
 		    </td>        
       </tr>
     <% end %>
