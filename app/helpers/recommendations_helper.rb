@@ -4,7 +4,7 @@ module RecommendationsHelper
   # assume everything is in at least one taxon
   def random_recommendations(product, count = 3)
     recs = product.recommendations.sort_by(&:rand).take(count)
-    rest = product.taxons.first.products.sort_by(&:rand).take(count - recs.count)
+    rest = product.taxons.first.products.reject {|p| p == product}.sort_by(&:rand).take(count - recs.count)
     recs + rest
   end
 
