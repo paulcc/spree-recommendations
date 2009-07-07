@@ -6,6 +6,8 @@ Adaptation of BDQ's accessories extension to give a similar notion of recommenda
 
 Defaults to a random set of (n = 3) items, drawing more from the product's taxon if insufficient recommendation entries are available.
 
+See paulcc's fork of spree-demo to see this code in actual use
+
 ## Using this extension
 
 No views included here: basically, you should be using some of your own short-detail product listing code for this.
